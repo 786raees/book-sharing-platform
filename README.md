@@ -1,3 +1,6 @@
+# Django Book Sharing Platform
+This project is to make and share your books with others
+
 # step 1 => install python 3.9
 # step 2 => create virtual envireonment
 `pip install virtualenv`
