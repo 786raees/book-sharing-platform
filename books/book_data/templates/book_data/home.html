@@ -1,0 +1,16 @@
+{% extends 'book_data/base.html' %} {% block content %}
+<div class="row">
+  <div class="col-12 mt-2">
+    <h1 class="text-center text-primary">{{title}}</h1>
+  </div>
+</div>
+<div class="row row-cols-3 p-4">
+  {% for book in books %}
+    {% include "book_data/includes/book_card.html" %}
+  {% endfor %}
+</div>
+{% endblock content %} {% block extra_js %}
+<script>
+  document.title = "ALL BOOKS";
+</script>
+{% endblock extra_js %}

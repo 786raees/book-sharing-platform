@@ -1,0 +1,8 @@
+from sre_parse import Verbose
+from django.apps import AppConfig
+
+
+class BookDataConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'book_data'
+    verbose_name = "Book Data"

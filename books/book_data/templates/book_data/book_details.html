@@ -1,0 +1,130 @@
+{% extends 'book_data/base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 p-4">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">{{book.name}}</h1>
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+          <img
+            src="{{book.cover.url}}"
+            class="img-fluid"
+            width="350"
+            alt="{{book.name}} imagae"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="text-center">Chapters list</h2>
+        </div>
+        <div class="col-12">
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Chapter No</th>
+                <th>Chapter Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for chapter in book.chapter_set.all %}
+              <tr>
+                <td scope="row">{{chapter.chapter_no}}</td>
+                <td>{{chapter.chapter_name }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% if request.user == book.author_name %}
+        
+        <div class="col-12 d-flex justify-content-center">
+          <button
+          type="button"
+          hx-get="{% url 'chapter_form' book.id %}"
+          hx-target=".modal-body"
+          class="btn btn-primary btn-lg align-center"
+          data-toggle="modal"
+          data-target="#chaptermodel"
+          >
+          Add Chapter
+        </button>
+      </div>
+      {% endif %}
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="chaptermodel"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="chaptermodel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add/Modify Chapter</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 text-center">
+      {% for chapter in book.chapter_set.all %}
+      <div class="row d-flex justify-content-center">
+        <h1 class="col-12">{{chapter.chapter_name }}</h1>
+        
+        {% if request.user == book.author_name %}
+          
+        <button type="button"
+        hx-get="{% url 'create_heading' chapter.id book.id %}"
+        hx-target=".modal-body"
+        data-toggle="modal"
+        data-target="#chaptermodel"
+        class="btn btn-success btn-sm mb-1 col-3">
+          Add Headings
+        </button>
+        <div class="col-12"></div>
+        <button type="button"
+        hx-confirm="Do you really want to delete the chapter"
+        hx-get="{% url 'delete_chapter' chapter.id book.id %}"
+        hx-target="#content"
+        class="btn btn-danger btn-sm mb-4 col-3">
+          Delete {{chapter.chapter_name }}
+        </button>
+        {% endif %}
+
+        {% include "book_data/includes/section.html" with section=chapter %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+  document.title = "{{book.name}}";
+</script>
+{% endblock content %}

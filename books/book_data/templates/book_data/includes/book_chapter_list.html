@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="text-center">Chapters list</h2>
+  </div>
+  <div class="col-12">
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Chapter No</th>
+          <th>Chapter Name</th>
+        </tr>
+      </thead>
+      <tbody >
+        {% for chapter in book.chapter_set.all %}
+        <tr>
+          <td scope="row">{{chapter.chapter_no}}</td>
+          <td>{{chapter.chapter_name }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-12 d-flex justify-content-center">
+    <button
+      type="button"
+      hx-get="{% url 'chapter_form' book.id %}"
+      hx-target=".modal-body"
+      class="btn btn-primary btn-lg align-center"
+      data-toggle="modal" data-target="#chaptermodel"
+    >
+      Add Chapter
+    </button>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="chaptermodel" tabindex="-1" role="dialog" aria-labelledby="chaptermodel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add/Modify Chapter</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body" >
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

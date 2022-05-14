@@ -1,0 +1,42 @@
+<!-- I am not using smentic html here to complete my task quickly -->
+
+<div class="row bg-secondary p-3 rounded w-100">
+  <div class="col-3">
+    <a hx-get="{% url 'home' %}" hx-push-url="{% url 'home' %}"  hx-target="#content" ><h3 class="text-white">Khan Book Library</h3></a>
+  </div>
+  <div class="col-5">
+    <form hx-post='{% url "home" %}'  hx-target="#content" class="d-flex">
+      {% csrf_token %}
+      <input
+        class="form-control me-2 form-control-lg"
+        type="search"
+        name="search"
+        placeholder="Search Book"
+        aria-label="Search"
+      />
+      <button type="submit" class="btn btn-primary">search</button>
+    </form>
+  </div>
+
+  {% if request.user.is_authenticated %}
+  <div class="col-4">
+    <div class="btn-group" role="group" aria-label="register">
+      <button hx-get="{% url 'create_book' %}" hx-push-url="{% url 'create_book' %}" hx-target="#content" type="button" class="btn btn-primary btn-lg">Add Books</button>
+      <button hx-get="{% url 'books_by_author' request.user.id %}" hx-push-url="{% url 'books_by_author' request.user.id %}" hx-target="#content" type="button" class="btn btn-success btn-lg">My Books</button>
+      <a type="button" href="{% url 'logout_view' %}" class="btn btn-danger btn-lg">Log Out</a>
+    </div>
+  </div>
+  {% else %}
+  <div class="col-4">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-10">
+        <div class="btn-group" role="group" aria-label="register">
+          <a type="button" href="{% url 'login_view' %}" class="btn btn-warning btn-lg">Login</a>
+          <a type="button" href="{% url 'signup' %}" class="btn btn-danger btn-lg">Sign Up</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

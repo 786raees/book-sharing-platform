@@ -1,0 +1,9 @@
+{% load crispy_forms_tags %}
+
+<form hx-post="{% url 'create_heading' chapter_id book_id %}" hx-target="#content" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="chapter_id" value="{{chapter_id}}" />
+{{form|crispy}}  <button type="submit" class="btn btn-primary col-12" 
+data-toggle="modal" data-target="#chaptermodel"
+>submit</button>
+</form>

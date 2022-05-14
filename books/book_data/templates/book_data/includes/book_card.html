@@ -1,0 +1,54 @@
+<div class="col mb-4">
+  <div class="card" style="width: 400px">
+    <img
+      class="card-img-top"
+      src="{{book.cover.url}}"
+      alt="Card image"
+      style="width: 100%"
+    />
+    <div class="card-body">
+      <h4 class="card-title">{{book.name}}</h4>
+      <div class="row">
+        <div class="col-12 mb-2">
+          <button
+            hx-get="{% url 'books_by_author' book.author_name.id %}"
+            hx-push-url="{% url 'books_by_author' book.author_name.id %}"
+            hx-target="#content"
+            type="button"
+            class="btn btn-success btn-sm"
+          >
+            {{book.author_name}}
+          </button>
+        </div>
+        <div class="col-12">
+          <button
+            hx-get="{% url 'book_details' book.id %}"
+            hx-push-url="{% url 'book_details' book.id %}"
+            hx-target="#content"
+            class="btn btn-primary"
+          >
+            Read Book
+          </button>
+          {% if request.user == book.author_name %}
+          <button
+            hx-get="{% url 'edit_book' book.id %}"
+            hx-push-url="{% url 'edit_book' book.id %}"
+            hx-target="#content"
+            class="btn btn-warning"
+          >
+            Edit Book
+          </button>
+          <button
+            hx-confirm="Do you really want to delete {{ book.name }}"
+            hx-get="{{book.get_delete_url}}"
+            hx-target="#content"
+            class="btn btn-danger"
+          >
+            Delete Book
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
