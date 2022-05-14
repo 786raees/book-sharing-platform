@@ -1,7 +1,8 @@
 # step 1 => install python 3.9
 # step 2 => create virtual envireonment
-```pip install virtualenv```
-```virtualenv venv```
+`pip install virtualenv`
+
+`virtualenv venv`
 # step 3 => activate virtualenv
 # win:
 ```.\venv\Scripts\activate```
